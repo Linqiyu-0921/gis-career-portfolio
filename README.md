@@ -15,8 +15,8 @@
 
 ## 🌐 在线访问
 
-- **职业规划网站**: https://linqiyu-0921.github.io/career-plan/
-- **作品集网站**: https://linqiyu-0921.github.io/portfolio/
+- **职业规划网站**: https://linqiyu-0921.github.io/gis-career-portfolio/career-plan/
+- **作品集网站**: https://linqiyu-0921.github.io/gis-career-portfolio/portfolio/
 
 ## 🎯 项目简介
 
