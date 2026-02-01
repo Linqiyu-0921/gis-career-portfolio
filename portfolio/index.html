@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的作品集 | GIS数据可视化设计师</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a5fb4;
+            --primary-light: #3584e4;
+            --accent: #ff6b35;
+            --bg-dark: #0a0e14;
+            --bg-card: #111820;
+            --bg-light: #1a2332;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --success: #10b981;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 20, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .plan-link {
+            background: var(--gradient-1);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            color: white !important;
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(240, 147, 251, 0.1) 0%, transparent 50%),
+                var(--bg-dark);
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .avatar-container {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--gradient-3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .avatar-ring {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #4facfe, #00f2fe, #43e97b, #38f9d7, #4facfe);
+            animation: rotate 10s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .hero-badge {
+            padding: 0.6rem 1.2rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .hero-desc {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 2;
+        }
+
+        .contact-btns {
+            margin-top: 2.5rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .contact-btn.primary {
+            background: var(--gradient-3);
+            color: white;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+        }
+
+        .contact-btn.secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Section通用 */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        /* 技能展示 */
+        .skills-section {
+            background: var(--bg-card);
+        }
+
+        .skills-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .skill-tag {
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-light);
+            border-radius: 50px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .skill-tag.gis {
+            background: rgba(79, 172, 254, 0.2);
+            color: #4facfe;
+        }
+
+        .skill-tag.design {
+            background: rgba(255, 107, 53, 0.2);
+            color: #ff6b35;
+        }
+
+        .skill-tag.code {
+            background: rgba(67, 233, 123, 0.2);
+            color: #43e97b;
+        }
+
+        .skill-tag.video {
+            background: rgba(240, 147, 251, 0.2);
+            color: #f093fb;
+        }
+
+        /* 作品网格 */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        .project-thumbnail {
+            width: 100%;
+            height: 250px;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-thumbnail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.3) 100%);
+        }
+
+        .project-placeholder {
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .project-placeholder-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .project-placeholder-text {
+            font-size: 1rem;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .project-tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* 时间线项目 */
+        .timeline-section {
+            background: var(--bg-card);
+        }
+
+        .timeline-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+        }
+
+        .timeline-date {
+            min-width: 100px;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .timeline-content h4 {
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* 数据统计 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* PPT作品集入口 */
+        .ppt-section {
+            background: var(--gradient-1);
+            border-radius: 30px;
+            padding: 4rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .ppt-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .ppt-section p {
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .ppt-preview {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 3rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .ppt-slides {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .ppt-slide {
+            width: 120px;
+            height: 160px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 0.8rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .ppt-slide:hover {
+            transform: translateY(-10px) rotate(0deg) !important;
+        }
+
+        .ppt-slide:nth-child(1) { transform: rotate(-5deg); }
+        .ppt-slide:nth-child(2) { transform: rotate(3deg); }
+        .ppt-slide:nth-child(3) { transform: rotate(-2deg); }
+        .ppt-slide:nth-child(4) { transform: rotate(4deg); }
+        .ppt-slide:nth-child(5) { transform: rotate(-3deg); }
+
+        /* 返回规划网站 */
+        .back-section {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: var(--gradient-3);
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(79, 172, 254, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ppt-section {
+                padding: 2rem;
+            }
+        }
+
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🎨 我的作品集</div>
+            <ul class="nav-links">
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#skills">技能</a></li>
+                <li><a href="#projects">项目作品</a></li>
+                <li><a href="#ppt">PPT作品</a></li>
+                <li><a href="../career-plan/index.html" class="plan-link">📋 职业规划</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="about">
+        <div class="hero-content">
+            <div class="avatar-container">
+                <div class="avatar-ring"></div>
+                <div class="avatar">🗺️</div>
+            </div>
+            <h1>你好，我是GIS设计师</h1>
+            <p class="tagline">地图可视化 / 数据动画 / 空间分析</p>
+            <div class="hero-badges">
+                <span class="hero-badge">🎓 GIS专业大三</span>
+                <span class="hero-badge">📍 成都</span>
+                <span class="hero-badge">🎯 求职中</span>
+            </div>
+            <p class="hero-desc">
+                热爱用视觉语言讲述地理数据的故事，致力于将复杂的空间信息转化为直观、美观、有洞察力的可视化作品。<br>
+                擅长GIS数据处理、地图设计与动态可视化，持续学习三维建模与影视后期技术。
+            </p>
+            <div class="contact-btns">
+                <a href="mailto:your.email@example.com" class="contact-btn primary">
+                    📧 联系邮箱
+                </a>
+                <a href="#" class="contact-btn secondary">
+                    💼 下载简历
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能展示 -->
+    <section class="skills-section" id="skills">
+        <div class="container">
+            <h2 class="section-title" style="background: var(--gradient-3); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🛠️ 专业技能</h2>
+            <p class="section-subtitle">不断精进的工具箱</p>
+            
+            <div class="skills-cloud">
+                <!-- GIS技能 -->
+                <span class="skill-tag gis">ArcGIS Pro</span>
+                <span class="skill-tag gis">QGIS</span>
+                <span class="skill-tag gis">Google Earth Engine</span>
+                <span class="skill-tag gis">ENVI</span>
+                <span class="skill-tag gis">空间分析</span>
+                <span class="skill-tag gis">遥感影像处理</span>
+                
+                <!-- 编程 -->
+                <span class="skill-tag code">Python</span>
+                <span class="skill-tag code">GeoPandas</span>
+                <span class="skill-tag code">Matplotlib</span>
+                <span class="skill-tag code">JavaScript</span>
+                <span class="skill-tag code">数据处理</span>
+                
+                <!-- 设计 -->
+                <span class="skill-tag design">Photoshop</span>
+                <span class="skill-tag design">Illustrator</span>
+                <span class="skill-tag design">地图设计</span>
+                <span class="skill-tag design">数据可视化</span>
+                <span class="skill-tag design">UI设计</span>
+                
+                <!-- 视频 -->
+                <span class="skill-tag video">After Effects</span>
+                <span class="skill-tag video">Premiere Pro</span>
+                <span class="skill-tag video">Blender</span>
+                <span class="skill-tag video">动态图形</span>
+                <span class="skill-tag video">视频剪辑</span>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">3+</div>
+                    <div class="stat-label">年GIS学习</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">项目作品</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8+</div>
+                    <div class="stat-label">掌握软件</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">学习热情</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目作品 -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title" style="background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🎨 项目作品</h2>
+            <p class="section-subtitle">课程作业、科研项目、个人练习</p>
+            
+            <div class="projects-grid">
+                <!-- 项目1 -->
+                <div class="project-card">
+                    <div class="project-thumbnail">
+                        <div class="project-placeholder">
+                            <div class="project-placeholder-icon">🌍</div>
+                            <div class="project-placeholder-text">项目缩略图</div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span class="project-tag">ArcGIS</span>
+                            <span class="project-tag">数据分析</span>
+                            <span class="project-tag">课程作业</span>
+                        </div>
+                        <h3 class="project-title">城市扩张时空演变分析</h3>
+                        <p class="project-desc">
+                            利用多时相遥感影像，分析成都市近20年的城市空间扩张模式，制作系列专题地图，揭示城市发展规律。
+                        </p>
+                        <div class="project-meta">
+                            <span>📅 2024年春季</span>
+                            <span>⏱️ 4周</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目2 -->
+                <div class="project-card">
+                    <div class="project-thumbnail">
+                        <div class="project-placeholder">
+                            <div class="project-placeholder-icon">🌊</div>
+                            <div class="project-placeholder-text">项目缩略图</div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span class="project-tag">GEE</span>
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">数据可视化</span>
+                        </div>
+                        <h3 class="project-title">长江流域水质监测可视化</h3>
+                        <p class="project-desc">
+                            基于Google Earth Engine平台，处理Sentinel-2影像数据，提取水质参数，制作交互式水质监测地图。
+                        </p>
+                        <div class="project-meta">
+                            <span>📅 2024年暑期</span>
+                            <span>⏱️ 6周</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目3 -->
+                <div class="project-card">
+                    <div class="project-thumbnail">
+                        <div class="project-placeholder">
+                            <div class="project-placeholder-icon">🎬</div>
+                            <div class="project-placeholder-text">项目缩略图</div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span class="project-tag">AE</span>
+                            <span class="project-tag">PR</span>
+                            <span class="project-tag">视频</span>
+                        </div>
+                        <h3 class="project-title">四川地形三维动画展示</h3>
+                        <p class="project-desc">
+                            结合DEM数据与Blender三维建模，制作四川盆地地形演变动画，展示地质历史与地貌特征。
+                        </p>
+                        <div class="project-meta">
+                            <span>📅 2024年秋季</span>
+                            <span>⏱️ 3周</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目4 -->
+                <div class="project-card">
+                    <div class="project-thumbnail">
+                        <div class="project-placeholder">
+                            <div class="project-placeholder-icon">🗺️</div>
+                            <div class="project-placeholder-text">项目缩略图</div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span class="project-tag">QGIS</span>
+                            <span class="project-tag">AI</span>
+                            <span class="project-tag">地图设计</span>
+                        </div>
+                        <h3 class="project-title">成都历史文化地图集</h3>
+                        <p class="project-desc">
+                            收集整理成都历史地理数据，设计制作系列文化主题地图，展现成都2300年建城史的文化脉络。
+                        </p>
+                        <div class="project-meta">
+                            <span>📅 2024年秋季</span>
+                            <span>⏱️ 8周</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目5 -->
+                <div class="project-card">
+                    <div class="project-thumbnail">
+                        <div class="project-placeholder">
+                            <div class="project-placeholder-icon">📊</div>
+                            <div class="project-placeholder-text">项目缩略图</div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">数据可视化</span>
+                            <span class="project-tag">竞赛作品</span>
+                        </div>
+                        <h3 class="project-title">全国空气质量时空分布</h3>
+                        <p class="project-desc">
+                            基于Python数据分析与可视化，制作全国主要城市空气质量时空分布图，参加数据可视化设计大赛。
+                        </p>
+                        <div class="project-meta">
+                            <span>📅 2025年计划</span>
+                            <span>⏱️ 待定</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目6 - 预留 -->
+                <div class="project-card">
+                    <div class="project-thumbnail" style="background: linear-gradient(135deg, #1a2332 0%, #0f1419 100%);">
+                        <div class="project-placeholder">
+                            <div class="project-placeholder-icon">➕</div>
+                            <div class="project-placeholder-text">更多项目筹备中</div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span class="project-tag">毕业设计</span>
+                            <span class="project-tag">持续更新</span>
+                        </div>
+                        <h3 class="project-title">即将添加更多作品...</h3>
+                        <p class="project-desc">
+                            正在学习和制作更多项目，包括毕业设计、竞赛作品和个人练习，将持续更新到作品集中。
+                        </p>
+                        <div class="project-meta">
+                            <span>📅 敬请期待</span>
+                            <span>⏱️ -</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 时间线经历 -->
+    <section class="timeline-section">
+        <div class="container">
+            <h2 class="section-title" style="background: var(--gradient-2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">📅 学习历程</h2>
+            <p class="section-subtitle">成长足迹与学习里程碑</p>
+            
+            <div class="timeline-list">
+                <div class="timeline-item">
+                    <div class="timeline-date">2022.09</div>
+                    <div class="timeline-content">
+                        <h4>🎓 开启GIS专业学习</h4>
+                        <p>进入地理信息科学专业，开始系统学习GIS理论与软件操作</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023.03</div>
+                    <div class="timeline-content">
+                        <h4>📊 掌握ArcGIS/QGIS</h4>
+                        <p>熟练运用主流GIS软件进行空间分析与地图制作</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023.09</div>
+                    <div class="timeline-content">
+                        <h4>🐍 学习Python数据处理</h4>
+                        <p>开始学习Python，掌握GeoPandas等GIS数据处理库</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2024.03</div>
+                    <div class="timeline-content">
+                        <h4>🎨 探索数据可视化</h4>
+                        <p>深入研究地图设计与数据可视化理论，提升审美能力</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2024.07</div>
+                    <div class="timeline-content">
+                        <h4>🎬 学习AE视频制作</h4>
+                        <p>开始系统学习After Effects，制作动态地图动画</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025+</div>
+                    <div class="timeline-content">
+                        <h4>🚀 持续进阶中...</h4>
+                        <p>学习Blender三维建模，完善技能体系，准备求职</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PPT作品集 -->
+    <section id="ppt">
+        <div class="container">
+            <div class="ppt-section">
+                <h2>📑 PPT项目介绍</h2>
+                <p>按照招聘要求准备的1-5页项目介绍PPT，展示地图相关项目经历</p>
+                
+                <div class="ppt-preview">
+                    <div class="ppt-slides">
+                        <div class="ppt-slide">
+                            <div>
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">👤</div>
+                                <div>个人简介</div>
+                            </div>
+                        </div>
+                        <div class="ppt-slide">
+                            <div>
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌍</div>
+                                <div>项目一</div>
+                            </div>
+                        </div>
+                        <div class="ppt-slide">
+                            <div>
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌊</div>
+                                <div>项目二</div>
+                            </div>
+                        </div>
+                        <div class="ppt-slide">
+                            <div>
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎬</div>
+                                <div>项目三</div>
+                            </div>
+                        </div>
+                        <div class="ppt-slide">
+                            <div>
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+                                <div>总结展望</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 1.5rem; opacity: 0.8;">点击下载完整PPT作品集</p>
+                </div>
+                
+                <a href="#" class="contact-btn primary" style="background: white; color: #764ba2;">
+                    📥 下载PPT作品集
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 返回规划网站 -->
+    <section class="back-section">
+        <h2 style="margin-bottom: 1rem;">想了解我的职业规划？</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">查看详细的学习计划和技能提升路径</p>
+        <a href="../career-plan/index.html" class="back-btn">
+            📋 查看职业规划网站 →
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="mailto:your.email@example.com">📧 邮箱联系</a>
+            <a href="#">💼 LinkedIn</a>
+            <a href="#">🐙 GitHub</a>
+            <a href="#">📱 微信</a>
+        </div>
+        <p>🗺️ 热爱人类！热爱地球！一起探索地球的无限可能！ 🌍</p>
+        <p style="margin-top: 1rem;">© 2024 GIS设计师作品集 · 持续更新中</p>
+    </footer>
+
+    <script>
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // 观察元素
+        document.querySelectorAll('.project-card, .timeline-item, .stat-card').forEach(el => {
+            el.style.opacity = '0';
+            observer.observe(el);
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

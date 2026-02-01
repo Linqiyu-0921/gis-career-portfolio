@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地图动画师 - 职业规划与成长路径</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a5fb4;
+            --primary-light: #3584e4;
+            --primary-dark: #0d3a7a;
+            --accent: #ff6b35;
+            --accent-light: #ff8c5a;
+            --bg-dark: #0f1419;
+            --bg-card: #1a2332;
+            --bg-light: #242f40;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #6b7a8f;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* 星空背景动画 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 20, 25, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .portfolio-link {
+            background: var(--gradient-3);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            color: white !important;
+            font-weight: 600;
+        }
+
+        .portfolio-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #4facfe 50%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .job-badge {
+            display: inline-flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .badge {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .badge-salary {
+            background: var(--gradient-2);
+        }
+
+        .badge-location {
+            background: var(--gradient-3);
+        }
+
+        .badge-exp {
+            background: var(--gradient-4);
+            color: #0f1419;
+        }
+
+        .hero-desc {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 2;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Section通用样式 */
+        section {
+            padding: 5rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 4rem;
+        }
+
+        /* 岗位深度分析 */
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .analysis-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .analysis-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .analysis-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .analysis-card .icon {
+            font-size: 1.5rem;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: var(--bg-light);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            color: var(--text-secondary);
+        }
+
+        .skill-tag.core {
+            background: rgba(255, 107, 53, 0.2);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .skill-tag.important {
+            background: rgba(46, 204, 113, 0.2);
+            color: var(--success);
+        }
+
+        /* 技能雷达图区域 */
+        .skills-section {
+            background: var(--bg-card);
+            border-radius: 30px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+
+        .skill-category {
+            margin-bottom: 2rem;
+        }
+
+        .skill-category h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .skill-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .skill-name {
+            min-width: 150px;
+            font-size: 0.95rem;
+        }
+
+        .skill-bar {
+            flex: 1;
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--gradient-3);
+            transition: width 1s ease;
+        }
+
+        .skill-level {
+            min-width: 60px;
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* 时间线 */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient-3);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            text-align: right;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 0 30px rgba(79, 172, 254, 0.5);
+        }
+
+        .timeline-phase {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-tasks {
+            list-style: none;
+        }
+
+        .timeline-tasks li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .timeline-tasks li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-tasks li {
+            padding-left: 0;
+            padding-right: 1.5rem;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-tasks li::before {
+            left: auto;
+            right: 0;
+        }
+
+        /* 里程碑 */
+        .milestone-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .milestone-card {
+            background: linear-gradient(145deg, var(--bg-card), var(--bg-light));
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s;
+        }
+
+        .milestone-card:hover {
+            transform: scale(1.05);
+        }
+
+        .milestone-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .milestone-label {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* 资源推荐 */
+        .resource-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: var(--gradient-3);
+            color: white;
+            border-color: transparent;
+        }
+
+        .resource-content {
+            display: none;
+        }
+
+        .resource-content.active {
+            display: block;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .resource-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .resource-card h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .resource-tag {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background: var(--bg-light);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-top: 0.8rem;
+            margin-right: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        /* 作品集入口 */
+        .portfolio-cta {
+            background: var(--gradient-1);
+            border-radius: 30px;
+            padding: 4rem;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .portfolio-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-cta p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: white;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item,
+            .timeline-item:nth-child(odd) {
+                flex-direction: column;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+                text-align: left !important;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+                transform: translateX(-50%);
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-tasks li {
+                padding-left: 1.5rem;
+                padding-right: 0;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-tasks li::before {
+                left: 0;
+                right: auto;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 星空背景 -->
+    <div class="stars" id="stars"></div>
+
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🗺️ GIS成长之路</div>
+            <ul class="nav-links">
+                <li><a href="#analysis">岗位分析</a></li>
+                <li><a href="#skills">技能要求</a></li>
+                <li><a href="#timeline">学习计划</a></li>
+                <li><a href="#resources">学习资源</a></li>
+                <li><a href="../portfolio/index.html" class="portfolio-link">📁 我的作品集</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>地图动画师</h1>
+            <p class="subtitle">Map Animation Specialist</p>
+            <div class="job-badge">
+                <span class="badge badge-salary">💰 10-15K</span>
+                <span class="badge badge-location">📍 成都</span>
+                <span class="badge badge-exp">🎓 1-3年·本科</span>
+            </div>
+            <p class="hero-desc">
+                热爱人类！热爱地球！一起探索地球的无限可能！<br>
+                这是一份融合了地理信息科学、数据可视化、动画设计的创意技术岗位。<br>
+                用地图讲述数据背后的故事，用动画展现地球的壮美与变化。
+            </p>
+        </div>
+        <div class="scroll-hint">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- 岗位深度分析 -->
+    <section id="analysis">
+        <div class="container">
+            <h2 class="section-title">🔍 岗位深度分析</h2>
+            <p class="section-subtitle">解码岗位要求，洞察职业本质</p>
+            
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3><span class="icon">🎯</span> 核心职责</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">这个岗位的本质是<b style="color: var(--accent);">地图+数据+视觉</b>的交叉融合：</p>
+                    <ul style="list-style: none; color: var(--text-secondary);">
+                        <li style="padding: 0.5rem 0;">✦ 地图数据的可视化表达与视频创作</li>
+                        <li style="padding: 0.5rem 0;">✦ 地理信息的收集、处理、分析与呈现</li>
+                        <li style="padding: 0.5rem 0;">✦ 动态效果设计与可视化技术研发</li>
+                        <li style="padding: 0.5rem 0;">✦ 用视觉语言讲述地理数据故事</li>
+                    </ul>
+                </div>
+
+                <div class="analysis-card">
+                    <h3><span class="icon">💡</span> 岗位关键词</h3>
+                    <div style="margin-top: 1rem;">
+                        <span class="skill-tag core">数据可视化</span>
+                        <span class="skill-tag core">动态地图</span>
+                        <span class="skill-tag core">视频创作</span>
+                        <span class="skill-tag">GIS分析</span>
+                        <span class="skill-tag">遥感处理</span>
+                        <span class="skill-tag">动画设计</span>
+                        <span class="skill-tag">三维建模</span>
+                        <span class="skill-tag">影视后期</span>
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <h3><span class="icon">🎨</span> 能力模型</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">岗位需要<b style="color: var(--success);">T型能力结构</b>：</p>
+                    <ul style="list-style: none; color: var(--text-secondary);">
+                        <li style="padding: 0.5rem 0;">📊 <b>专业深度</b>：GIS/遥感数据处理</li>
+                        <li style="padding: 0.5rem 0;">🎬 <b>技能广度</b>：设计+建模+后期</li>
+                        <li style="padding: 0.5rem 0;">💭 <b>创意能力</b>：审美+想象力+表达</li>
+                        <li style="padding: 0.5rem 0;">🤝 <b>软技能</b>：沟通+责任心+学习力</li>
+                    </ul>
+                </div>
+
+                <div class="analysis-card">
+                    <h3><span class="icon">📈</span> 发展前景</h3>
+                    <ul style="list-style: none; color: var(--text-secondary);">
+                        <li style="padding: 0.5rem 0;">🌍 数字孪生城市建设热潮</li>
+                        <li style="padding: 0.5rem 0;">📱 新媒体对地图可视化需求激增</li>
+                        <li style="padding: 0.5rem 0;">🛰️ 遥感数据应用场景不断扩展</li>
+                        <li style="padding: 0.5rem 0;">🎮 元宇宙/游戏地图需求增长</li>
+                        <li style="padding: 0.5rem 0;">📺 科普/纪录片视觉化趋势</li>
+                    </ul>
+                </div>
+
+                <div class="analysis-card">
+                    <h3><span class="icon">⚠️</span> 竞争分析</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">你的<b style="color: var(--accent);">优势与挑战</b>：</p>
+                    <ul style="list-style: none; color: var(--text-secondary);">
+                        <li style="padding: 0.5rem 0;">✅ 专业对口：GIS本科背景</li>
+                        <li style="padding: 0.5rem 0;">✅ 时间充裕：一年准备期</li>
+                        <li style="padding: 0.5rem 0;">⚠️ 技能缺口：设计/后期软件</li>
+                        <li style="padding: 0.5rem 0;">⚠️ 作品缺失：需要积累项目</li>
+                    </ul>
+                </div>
+
+                <div class="analysis-card">
+                    <h3><span class="icon">📝</span> 简历策略</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">HR关注的<b style="color: var(--success);">关键点</b>：</p>
+                    <ul style="list-style: none; color: var(--text-secondary);">
+                        <li style="padding: 0.5rem 0;">1️⃣ 作品集比简历更重要</li>
+                        <li style="padding: 0.5rem 0;">2️⃣ 项目经历要具体量化</li>
+                        <li style="padding: 0.5rem 0;">3️⃣ 软件技能需匹配JD</li>
+                        <li style="padding: 0.5rem 0;">4️⃣ 展示学习能力和热情</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能要求详解 -->
+    <section id="skills" style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">🛠️ 技能要求详解</h2>
+            <p class="section-subtitle">明确目标，逐项攻克</p>
+            
+            <div class="skills-section">
+                <div class="skill-category">
+                    <h4>🗺️ GIS & 遥感软件（核心基础）</h4>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">ArcGIS Pro</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
+                        <span class="skill-level">熟练</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">QGIS</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 80%"></div></div>
+                        <span class="skill-level">熟练</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">Google Earth Engine</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 60%"></div></div>
+                        <span class="skill-level">掌握</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">ENVI</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 50%"></div></div>
+                        <span class="skill-level">掌握</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>💻 编程 & 数据处理（加分项）</h4>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">Python</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 75%"></div></div>
+                        <span class="skill-level">熟练</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">JavaScript (可视化)</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 50%"></div></div>
+                        <span class="skill-level">掌握</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">R/Matlab</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 30%"></div></div>
+                        <span class="skill-level">了解</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>🎨 设计软件（必备）</h4>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">Adobe Photoshop</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 70%"></div></div>
+                        <span class="skill-level">熟练</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">Adobe Illustrator</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 65%"></div></div>
+                        <span class="skill-level">熟练</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>🎬 三维 & 后期（核心竞争力）</h4>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">Blender / C4D</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 55%"></div></div>
+                        <span class="skill-level">掌握</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">After Effects</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 60%"></div></div>
+                        <span class="skill-level">掌握</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">Premiere Pro</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 55%"></div></div>
+                        <span class="skill-level">掌握</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>📚 理论知识</h4>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">地图学/制图规范</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 80%"></div></div>
+                        <span class="skill-level">熟练</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">数据可视化原理</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 70%"></div></div>
+                        <span class="skill-level">熟练</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <span class="skill-name">动画/运动规律</span>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 50%"></div></div>
+                        <span class="skill-level">掌握</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学习计划时间线 -->
+    <section id="timeline">
+        <div class="container">
+            <h2 class="section-title">📅 一年成长计划</h2>
+            <p class="section-subtitle">从大三到大四，系统提升技能</p>
+            
+            <div class="timeline">
+                <!-- 第一阶段 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-phase">第一阶段 · 3个月</div>
+                        <h3 class="timeline-title">🚀 夯实基础期</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">大三下学期（3-6月）</p>
+                        <ul class="timeline-tasks">
+                            <li>巩固ArcGIS/QGIS高级功能</li>
+                            <li>学习Python数据处理（pandas/geopandas）</li>
+                            <li>掌握PS/AI基础操作</li>
+                            <li>学习地图配色与视觉设计</li>
+                            <li>完成1-2个课程作业项目</li>
+                            <li>阅读《Thematic Map Design》</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-dot">3-6月</div>
+                </div>
+
+                <!-- 第二阶段 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-phase">第二阶段 · 3个月</div>
+                        <h3 class="timeline-title">🎨 技能拓展期</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">暑假（7-9月）</p>
+                        <ul class="timeline-tasks">
+                            <li>学习After Effects动画制作</li>
+                            <li>掌握Blender基础建模</li>
+                            <li>学习GEE遥感数据处理</li>
+                            <li>研究优秀地图可视化案例</li>
+                            <li>制作1个完整的数据可视化视频</li>
+                            <li>尝试接单/参加比赛积累经验</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-dot" style="background: var(--gradient-2);">7-9月</div>
+                </div>
+
+                <!-- 第三阶段 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-phase">第三阶段 · 3个月</div>
+                        <h3 class="timeline-title">🔬 项目实战期</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">大四上学期（9-12月）</p>
+                        <ul class="timeline-tasks">
+                            <li>确定毕业设计选题（可视化方向）</li>
+                            <li>整合技能制作高质量作品</li>
+                            <li>学习PR视频剪辑与调色</li>
+                            <li>研究动态地图与交互可视化</li>
+                            <li>参加数据可视化竞赛</li>
+                            <li>整理作品集（至少3个完整项目）</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-dot" style="background: var(--gradient-1);">9-12月</div>
+                </div>
+
+                <!-- 第四阶段 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-phase">第四阶段 · 3个月</div>
+                        <h3 class="timeline-title">💼 求职冲刺期</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">大四下学期（1-3月）</p>
+                        <ul class="timeline-tasks">
+                            <li>优化作品集（1-5页PPT）</li>
+                            <li>针对性投递简历</li>
+                            <li>准备面试常见问题</li>
+                            <li>模拟项目演示</li>
+                            <li>关注校招/实习机会</li>
+                            <li>持续学习行业新技术</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-dot" style="background: var(--gradient-4); color: #0f1419;">1-3月</div>
+                </div>
+            </div>
+
+            <!-- 关键里程碑 -->
+            <div class="milestone-grid">
+                <div class="milestone-card">
+                    <div class="milestone-number">3+</div>
+                    <div class="milestone-label">完整作品集项目</div>
+                </div>
+                <div class="milestone-card">
+                    <div class="milestone-number">8+</div>
+                    <div class="milestone-label">掌握软件工具</div>
+                </div>
+                <div class="milestone-card">
+                    <div class="milestone-number">1</div>
+                    <div class="milestone-label">数据可视化视频</div>
+                </div>
+                <div class="milestone-card">
+                    <div class="milestone-number">1</div>
+                    <div class="milestone-label">毕业设计作品</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学习资源推荐 -->
+    <section id="resources" style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">📚 学习资源推荐</h2>
+            <p class="section-subtitle">精选优质教程，少走弯路</p>
+            
+            <div class="resource-tabs">
+                <button class="tab-btn active" onclick="switchTab('gis')">GIS & 遥感</button>
+                <button class="tab-btn" onclick="switchTab('design')">设计 & 后期</button>
+                <button class="tab-btn" onclick="switchTab('coding')">编程 & 数据</button>
+                <button class="tab-btn" onclick="switchTab('inspiration')">灵感 & 案例</button>
+            </div>
+
+            <!-- GIS & 遥感 -->
+            <div class="resource-content active" id="gis">
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h4>ArcGIS官方教程</h4>
+                        <p>Esri官方出品，最权威的ArcGIS学习资源，包含视频教程和文档。</p>
+                        <span class="resource-tag">官方</span>
+                        <span class="resource-tag">免费</span>
+                    </div>
+                    <div class="resource-card">
+                        <h4>QGIS官方文档</h4>
+                        <p>开源GIS软件的完整文档，适合深入学习GIS原理和操作。</p>
+                        <span class="resource-tag">开源</span>
+                        <span class="resource-tag">免费</span>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Google Earth Engine教程</h4>
+                        <p>GEE官方代码实验室，学习云端遥感数据处理的最佳资源。</p>
+                        <span class="resource-tag">遥感</span>
+                        <span class="resource-tag">云平台</span>
+                    </div>
+                    <div class="resource-card">
+                        <h4>遥感学报/地理学报</h4>
+                        <p>国内顶级期刊，了解最新研究动态和应用案例。</p>
+                        <span class="resource-tag">学术</span>
+                        <span class="resource-tag">中文</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 设计 & 后期 -->
+            <div class="resource-content" id="design">
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h4>doyoudo</h4>
+                        <p>国内优质设计教程网站，AE/PR/PS教程讲解清晰易懂。</p>
+                        <span class="resource-tag">中文</span>
+                        <span class="resource-tag">系统</span>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Blender Guru</h4>
+                        <p>Blender最经典的教程系列，Donut教程适合零基础入门。</p>
+                        <span class="resource-tag">英文</span>
+                        <span class="resource-tag">免费</span>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Motion Design School</h4>
+                        <p>专业的动态设计教程，学习动画原理和运动规律。</p>
+                        <span class="resource-tag">进阶</span>
+                        <span class="resource-tag">付费</span>
+                    </div>
+                    <div class="resource-card">
+                        <h4>配色方案网站</h4>
+                        <p>Coolors.co 和 Color Hunt，学习地图配色搭配。</p>
+                        <span class="resource-tag">工具</span>
+                        <span class="resource-tag">配色</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 编程 & 数据 -->
+            <div class="resource-content" id="coding">
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h4>廖雪峰Python教程</h4>
+                        <p>适合初学者的Python教程，讲解清晰，有实践项目。</p>
+                        <span class="resource-tag">中文</span>
+                        <span class="resource-tag">免费</span>
+                    </div>
+                    <div class="resource-card">
+                        <h4>GeoPandas文档</h4>
+                        <p>Python地理数据处理的核心库，必学技能。</p>
+                        <span class="resource-tag">GIS</span>
+                        <span class="resource-tag">Python</span>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Mapbox GL JS</h4>
+                        <p>Web地图可视化库，学习制作交互式地图。</p>
+                        <span class="resource-tag">Web</span>
+                        <span class="resource-tag">可视化</span>
+                    </div>
+                    <div class="resource-card">
+                        <h4>D3.js Gallery</h4>
+                        <p>数据可视化的标杆，大量创意可视化案例参考。</p>
+                        <span class="resource-tag">数据可视化</span>
+                        <span class="resource-tag">灵感</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 灵感 & 案例 -->
+            <div class="resource-content" id="inspiration">
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h4>Pinterest</h4>
+                        <p>海量地图设计灵感，搜索"map design"、"cartography"。</p>
+                        <span class="resource-tag">灵感</span>
+                        <span class="resource-tag">设计</span>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Behance</h4>
+                        <p>顶级设计师作品展示平台，搜索数据可视化项目。</p>
+                        <span class="resource-tag">作品集</span>
+                        <span class="resource-tag">专业</span>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Info Beautiful</h4>
+                        <p>数据可视化经典书籍和网站，学习可视化理论。</p>
+                        <span class="resource-tag">理论</span>
+                        <span class="resource-tag">经典</span>
+                    </div>
+                    <div class="resource-card">
+                        <h4>NASA Earth Observatory</h4>
+                        <p>NASA地球观测站，顶级的遥感可视化案例。</p>
+                        <span class="resource-tag">遥感</span>
+                        <span class="resource-tag">科普</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集入口 -->
+    <section>
+        <div class="container">
+            <div class="portfolio-cta">
+                <h2>🎨 我的作品集</h2>
+                <p>记录成长轨迹，展示专业技能<br>在这里查看我的项目案例和学习成果</p>
+                <a href="../portfolio/index.html" class="cta-button">查看作品集 →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>🗺️ 热爱人类！热爱地球！一起探索地球的无限可能！ 🌍</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">为大三GIS专业学生定制的职业规划 · 2024</p>
+    </footer>
+
+    <script>
+        // 生成星空背景
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 100;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.opacity = Math.random();
+                starsContainer.appendChild(star);
+            }
+        }
+        createStars();
+
+        // 标签切换
+        function switchTab(tabId) {
+            // 移除所有active
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.resource-content').forEach(content => content.classList.remove('active'));
+            
+            // 添加active到当前
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有卡片
+        document.querySelectorAll('.analysis-card, .timeline-content, .milestone-card, .resource-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
