@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地图动画师成长计划</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --bg-hover: #252532;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6b6b7b;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-text: linear-gradient(135deg, #fff 0%, #a78bfa 50%, #3b82f6 100%);
+            --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --border-color: rgba(255,255,255,0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.2rem 2rem;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            padding: 0.6rem 1.5rem;
+            background: var(--gradient-primary);
+            border-radius: 50px;
+            color: white !important;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(139, 92, 246, 0.1), transparent);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .hero-badge span {
+            color: var(--accent-cyan);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            max-width: 900px;
+        }
+
+        .hero h1 .gradient {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 4rem;
+            margin-top: 2rem;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        /* Section通用 */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 岗位介绍 */
+        .intro-section {
+            background: var(--bg-secondary);
+        }
+
+        .intro-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .intro-content p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 2;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* 技能卡片 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .skill-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .skill-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .skill-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.2rem;
+        }
+
+        .skill-tag {
+            padding: 0.3rem 0.8rem;
+            background: var(--bg-hover);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* 学习路径流程 */
+        .timeline-section {
+            background: var(--bg-secondary);
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .timeline-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 2rem;
+            right: 2rem;
+            height: 3px;
+            background: var(--gradient-primary);
+            border-radius: 0 0 3px 3px;
+        }
+
+        .timeline-card:nth-child(2)::before {
+            background: var(--gradient-accent);
+        }
+
+        .timeline-card:nth-child(3)::before {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+        }
+
+        .timeline-card:nth-child(4)::before {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+
+        .timeline-phase {
+            font-size: 0.85rem;
+            color: var(--accent-purple);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-card:nth-child(2) .timeline-phase {
+            color: var(--accent-pink);
+        }
+
+        .timeline-card:nth-child(3) .timeline-phase {
+            color: var(--accent-cyan);
+        }
+
+        .timeline-card:nth-child(4) .timeline-phase {
+            color: var(--accent-orange);
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-list {
+            list-style: none;
+        }
+
+        .timeline-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .timeline-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-purple);
+        }
+
+        .timeline-card:nth-child(2) .timeline-list li::before {
+            color: var(--accent-pink);
+        }
+
+        .timeline-card:nth-child(3) .timeline-list li::before {
+            color: var(--accent-cyan);
+        }
+
+        .timeline-card:nth-child(4) .timeline-list li::before {
+            color: var(--accent-orange);
+        }
+
+        .timeline-time {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* 评价引用区 */
+        .testimonials-section {
+            background: var(--bg-primary);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--accent-purple);
+            opacity: 0.3;
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            line-height: 1;
+        }
+
+        .testimonial-text {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .testimonial-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .testimonial-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--bg-secondary);
+            text-align: center;
+        }
+
+        .cta-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-desc {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2.5rem;
+            background: var(--gradient-primary);
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-copy {
+            width: 100%;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .timeline-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-stats {
+                gap: 2rem;
+            }
+            
+            .timeline-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* 动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🗺️ GIS成长计划</div>
+            <ul class="nav-links">
+                <li><a href="#about">岗位介绍</a></li>
+                <li><a href="#skills">技能要求</a></li>
+                <li><a href="#timeline">学习路径</a></li>
+                <li><a href="../portfolio/index.html" class="nav-cta">查看作品集 →</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span>●</span> 大三GIS专业学生 · 一年冲刺计划
+        </div>
+        <h1>
+            成为 <span class="gradient">地图动画师</span><br>
+            探索地球的无限可能
+        </h1>
+        <p class="hero-subtitle">
+            热爱人类！热爱地球！我们将地理信息科学与视觉艺术深度融合，
+            用地图讲述数据背后的故事，用动画展现地球的壮美与变化。
+        </p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-value">10-15K</div>
+                <div class="hero-stat-label">目标薪资</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">成都</div>
+                <div class="hero-stat-label">目标城市</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">365</div>
+                <div class="hero-stat-label">天准备期</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 岗位介绍 -->
+    <section class="intro-section" id="about">
+        <div class="container">
+            <div class="intro-content fade-in">
+                <p>
+                    <strong>地图动画师</strong>是专注于地图数据可视化与视频创作的创意技术岗位。
+                    我们需要将算法艺术与视觉美学深度融合，把复杂的空间数据转化为引人入胜的视觉故事。
+                </p>
+                <p>
+                    从遥感数据的获取处理，到地图的视觉设计，再到动态效果的创作——
+                    每一个环节都需要<strong>专业深度</strong>与<strong>创意能力</strong>的完美结合。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能要求 -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">技能体系</div>
+                <h2 class="section-title">四大核心能力模块</h2>
+                <p class="section-desc">
+                    构建T型能力结构：GIS专业深度 + 设计技能广度 + 创意表达能力
+                </p>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-card fade-in">
+                    <div class="skill-icon">🗺️</div>
+                    <h3>GIS & 遥感</h3>
+                    <p>掌握ArcGIS、QGIS等主流GIS软件，熟悉Google Earth Engine云端遥感数据处理，具备空间分析与数据处理能力。</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">ArcGIS Pro</span>
+                        <span class="skill-tag">QGIS</span>
+                        <span class="skill-tag">GEE</span>
+                        <span class="skill-tag">ENVI</span>
+                    </div>
+                </div>
+
+                <div class="skill-card fade-in">
+                    <div class="skill-icon">💻</div>
+                    <h3>编程 & 数据</h3>
+                    <p>掌握Python进行地理数据处理，熟悉GeoPandas等库，能够自动化处理海量数据，提升工作效率。</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">GeoPandas</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">Jupyter</span>
+                    </div>
+                </div>
+
+                <div class="skill-card fade-in">
+                    <div class="skill-icon">🎨</div>
+                    <h3>设计 & 视觉</h3>
+                    <p>精通PS/AI进行地图视觉设计，掌握配色原理与制图规范，具备良好的审美能力与创意表达能力。</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Photoshop</span>
+                        <span class="skill-tag">Illustrator</span>
+                        <span class="skill-tag">配色设计</span>
+                        <span class="skill-tag">地图学</span>
+                    </div>
+                </div>
+
+                <div class="skill-card fade-in">
+                    <div class="skill-icon">🎬</div>
+                    <h3>动画 & 后期</h3>
+                    <p>使用AE/PR制作动态地图视频，掌握Blender三维建模，能够创作专业级的数据可视化视频作品。</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">After Effects</span>
+                        <span class="skill-tag">Premiere</span>
+                        <span class="skill-tag">Blender</span>
+                        <span class="skill-tag">动态设计</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学习路径 -->
+    <section class="timeline-section" id="timeline">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">成长路径</div>
+                <h2 class="section-title">一年四阶段学习计划</h2>
+                <p class="section-desc">
+                    从大三到大四，系统提升技能，为校招和实习做好充分准备
+                </p>
+            </div>
+
+            <div class="timeline-grid">
+                <div class="timeline-card fade-in">
+                    <div class="timeline-phase">第一阶段</div>
+                    <h3 class="timeline-title">🚀 夯实基础</h3>
+                    <ul class="timeline-list">
+                        <li>巩固ArcGIS高级功能</li>
+                        <li>学习Python数据处理</li>
+                        <li>掌握PS/AI基础操作</li>
+                        <li>学习地图配色与设计</li>
+                        <li>完成课程作业项目</li>
+                    </ul>
+                    <div class="timeline-time">大三下 · 3-6月</div>
+                </div>
+
+                <div class="timeline-card fade-in">
+                    <div class="timeline-phase">第二阶段</div>
+                    <h3 class="timeline-title">🎨 技能拓展</h3>
+                    <ul class="timeline-list">
+                        <li>学习After Effects</li>
+                        <li>掌握Blender建模</li>
+                        <li>学习GEE遥感处理</li>
+                        <li>研究优秀案例</li>
+                        <li>制作可视化视频</li>
+                    </ul>
+                    <div class="timeline-time">暑假 · 7-9月</div>
+                </div>
+
+                <div class="timeline-card fade-in">
+                    <div class="timeline-phase">第三阶段</div>
+                    <h3 class="timeline-title">🔬 项目实战</h3>
+                    <ul class="timeline-list">
+                        <li>确定毕业设计选题</li>
+                        <li>整合技能制作品</li>
+                        <li>学习PR剪辑调色</li>
+                        <li>参加数据可视化竞赛</li>
+                        <li>整理作品集</li>
+                    </ul>
+                    <div class="timeline-time">大四上 · 9-12月</div>
+                </div>
+
+                <div class="timeline-card fade-in">
+                    <div class="timeline-phase">第四阶段</div>
+                    <h3 class="timeline-title">💼 求职冲刺</h3>
+                    <ul class="timeline-list">
+                        <li>优化作品集PPT</li>
+                        <li>针对性投递简历</li>
+                        <li>准备面试问题</li>
+                        <li>模拟项目演示</li>
+                        <li>关注校招机会</li>
+                    </ul>
+                    <div class="timeline-time">大四下 · 1-3月</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学习心得 -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">成长感悟</div>
+                <h2 class="section-title">学习路上的心得体会</h2>
+                <p class="section-desc">
+                    记录每一个阶段的思考与收获，见证自己的成长
+                </p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-text">
+                        地图不仅是科学，更是一门艺术。当我第一次用AE让静态地图动起来，看到数据在时间轴上流淌的那一刻，我确信这就是我想要追求的方向。
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">🎯</div>
+                        <div class="testimonial-info">
+                            <h4>关于选择</h4>
+                            <p>职业方向的确定</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-text">
+                        从只会简单的GIS软件操作，到能够独立完成数据处理和可视化，这一年让我明白：技能的提升没有捷径，只有持续的学习和实践。
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">📈</div>
+                        <div class="testimonial-info">
+                            <h4>关于成长</h4>
+                            <p>技能提升的感悟</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-text">
+                        热爱人类，热爱地球，这不仅是一句口号。每一次通过地图了解我们生活的这个世界，都让我更加坚定用可视化传递地理之美的信念。
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">🌍</div>
+                        <div class="testimonial-info">
+                            <h4>关于热爱</h4>
+                            <p>保持初心的力量</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-box fade-in">
+                <div class="cta-content">
+                    <h2 class="cta-title">开启你的地图动画师之路</h2>
+                    <p class="cta-desc">
+                        无论你是刚开始规划，还是已经在路上，<br>
+                        都可以从这里开始，打造属于你的专业作品集
+                    </p>
+                    <a href="../portfolio/index.html" class="cta-btn">
+                        查看我的作品集 →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>🗺️ GIS成长计划</h3>
+                <p>热爱人类！热爱地球！一起探索地球的无限可能！</p>
+            </div>
+            <div class="footer-links">
+                <a href="#about">岗位介绍</a>
+                <a href="#skills">技能要求</a>
+                <a href="#timeline">学习路径</a>
+                <a href="../portfolio/index.html">作品集</a>
+            </div>
+            <div class="footer-copy">
+                © 2024 地图动画师成长计划 · 为GIS专业学生定制
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
